@@ -67,13 +67,6 @@ button {
   height: 4%;
 }
 
-#ingredientes{
-  top: 4%;
-  left: 9%;
-  width: 6%;
-  height: 4%;
-}
-
 #prebatallacontinuar,
 #wincontinuar,
 #wfuerzacontinuar,
@@ -120,4 +113,78 @@ button {
   left: 40%;
   width: 22%;
   height: 10%;
+}
+
+
+
+#ingredientes {
+    position: fixed;
+}
+
+/* SVG que se coloca exactamente
+   encima de la imagen */
+.ingredientes-overlay {
+    position: absolute;
+    inset: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    pointer-events: none;
+}
+
+/* Cada zona seleccionable */
+.ingrediente {
+    fill: rgba(255, 255, 255, 0);
+    stroke: transparent;
+    stroke-width: 5;
+
+    cursor: pointer;
+
+    pointer-events: auto;
+
+    transition: 
+        fill 0.15s ease,
+        stroke 0.15s ease,
+        filter 0.15s ease;
+}
+
+/* Al pasar el mouse */
+.ingrediente:hover {
+    fill: rgba(255, 255, 255, 0.15);
+    stroke: #ba00d377;
+
+    filter: drop-shadow(0 0 5px #f7f7f700);
+}
+
+/* Cuando está seleccionado */
+.ingrediente.seleccionado {
+    fill: rgba(0, 177, 231, 0.20);
+    stroke: #ba00d377;
+
+    filter: drop-shadow(0 0 8px #fdfdfd70);
+}
+
+/* Cartel */
+#tooltip-ingrediente {
+    position: fixed;
+
+    display: none;
+
+    padding: 8px 14px;
+
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+
+    border: 2px solid #f7f8f859;
+    border-radius: 8px;
+
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+
+    pointer-events: none;
+
+    z-index: 1000;
+
+    white-space: nowrap;
 }

@@ -9,19 +9,68 @@
 <body>
   <div id="menu-screen" class="screen active">
     <img src="Newsimgs/mainmenu.jpg" alt="Menú principal">
-    <button id="comenzar" type="button" data-target="prebatalla-screen"></button>
+    <button id="comenzar" type="button" data-target="ingredientes-screen"></button>
   </div>
 
-  <div id="ingredientes" class="screen">
+<!-- <div id="ingredientes-inicial" class="screen">
     <img src="Newsimgs/ingredientes.PNG" alt="ingredientes">
     <button id="ingredientes" type="button" data-target="elegir-screen"></button>
-  </div>
+  </div> -->
 
-  <div id="elegir-screen" class="screen">
-    <img src="elegir.png" alt="Elegir habilidad">
+  <div id="ingredientes-screen" class="screen">
+    <img src="Newsimgs/ingredientes.PNG" alt="Ingredientes">
+    <svg class="ingredientes-overlay"
+         viewBox="0 0 1536 1024"
+         preserveAspectRatio="xMidYMid meet">
+
+        <!-- Vino Tinto -->
+        <polygon
+        class="ingrediente" data-nombre="Vino Tinto"
+        points="421,100 489,179 489,207 473,322 400,344 380,351 339,341 299,319 299,267 299,220 298,175 308,145 347,115 347,57 361,26 386,25 399,22 425,47" />
+
+        <!-- LICUADORA -->
+        <polygon
+        class="ingrediente" data-nombre="Licuadora"
+        points="630,156 660,313 625,436 648,463 736,469 828,450 838,423 804,301 844,277 844,166 794,106 663,107" />
+
+        <!-- AZÚCAR -->
+        <polygon
+        class="ingrediente" data-nombre="Azucar"
+        points="1240,97 1170,92 1098,168 1098,318 1197,382 1261,383 1285,353 1283,164" />
+
+        <!-- CHOCOLATE -->
+        <polygon
+        class="ingrediente" data-nombre="Hielos"
+        points="240,419 299,337 442,414 399,496" />
+
+        <!-- VASO -->
+        <polygon
+        class="ingrediente" data-nombre="Vaso"
+        points="887,255 907,433 951,446 1005,434 1013,251" />
+
+        <!-- CUCHILLO -->
+        <polygon
+        class="ingrediente" data-nombre="Cuchillo"
+        points="857,460 1076,552 1093,517 1000,459 856,422" />
+
+        <!-- FRUTILLAS -->
+        <polygon
+        class="ingrediente" data-nombre="Frutillas"
+        points="1255,400 1283,453 1272,530 1214,549 1119,536 1093,451 1129,401" />
+
+        <!-- TABLA -->
+        <polygon
+        class="ingrediente" data-nombre="Tabla"
+        points="434,439 558,569 661,484 547,366 451,337 423,355" />
+
+    </svg>
+    <!-- Cartel que aparece al pasar el mouse -->
+    <div id="tooltip-ingrediente"></div>
+</div>
+
+  <div id="cortar-frutillas" class="screen">
+    <img src="Newsimgs/preparandofrutillas.PNG" alt="Cortar frutillas">
     <button id="fuerzaboton" type="button" data-target="wfuerza-screen"></button>
-    <button id="astuciaboton" type="button" data-target="wastucia-screen"></button>
-    <button id="agilidadboton" type="button" data-target="lagil-screen"></button>
   </div>
 
   <div id="wfuerza-screen" class="screen">
