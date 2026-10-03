@@ -1,6 +1,11 @@
 const screens = document.querySelectorAll('.screen');
+let erroresIngredientes = 0;
 
 function showScreen(screenId) {
+  if (screenId === 'menu-screen') {
+    erroresIngredientes = 0;
+  }
+
   screens.forEach((screen) => {
     screen.classList.toggle('active', screen.id === screenId);
   });
@@ -77,6 +82,49 @@ ingredientes.forEach((ingrediente) => {
             'Ingrediente seleccionado:',
             ingrediente.dataset.nombre
         );
+    });
+
+});
+
+const errorDialog = document.getElementById('error-dialog');
+const errorDialogMessage = document.getElementById('error-dialog-message');
+const errorDialogClose = document.getElementById('error-dialog-close');
+
+errorDialogClose.addEventListener('click', () => {
+    errorDialog.close();
+});
+
+errorDialog.addEventListener('close', () => {
+    if (erroresIngredientes >= 3) {
+        showScreen('perdiste-screen');
+    }
+});
+
+ingredientes.forEach((ingrediente) => {
+
+    ingrediente.addEventListener('click', () => {
+
+        const esCorrecto =
+            ingrediente.dataset.correcto === 'true';
+
+        // FRUTILLAS
+        if (esCorrecto) {
+
+            showScreen('cortar-frutillas');
+
+            return;
+        }
+
+        // ELEMENTO INCORRECTO
+        erroresIngredientes++;
+
+        errorDialogMessage.textContent =
+            `¡Ese no es el ingrediente que necesitás!\n\n` +
+            `Intentos incorrectos: ${erroresIngredientes}/3`;
+        errorDialogClose.textContent =
+            erroresIngredientes >= 3 ? 'Rendirte' : 'Continuar';
+        errorDialog.showModal();
+
     });
 
 });

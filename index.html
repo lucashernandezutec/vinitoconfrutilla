@@ -55,7 +55,7 @@
 
         <!-- FRUTILLAS -->
         <polygon
-        class="ingrediente" data-nombre="Frutillas"
+        class="ingrediente" data-nombre="Frutillas" data-correcto="true"
         points="1255,400 1283,453 1272,530 1214,549 1119,536 1093,451 1129,401" />
 
         <!-- TABLA -->
@@ -70,37 +70,7 @@
 
   <div id="cortar-frutillas" class="screen">
     <img src="Newsimgs/preparandofrutillas.PNG" alt="Cortar frutillas">
-    <button id="fuerzaboton" type="button" data-target="wfuerza-screen"></button>
-  </div>
-
-  <div id="wfuerza-screen" class="screen">
-    <img src="wfuerza.png" alt="Fuerza">
-    <button id="wfuerzacontinuar" type="button" data-target="wfuerzapost-screen"></button>
-  </div>
-
-  <div id="wastucia-screen" class="screen">
-    <img src="wastucia.png" alt="Astucia">
-    <button id="wastuciacontinuar" type="button" data-target="wastuciapost-screen"></button>
-  </div>
-
-  <div id="lagil-screen" class="screen">
-    <img src="lagil.png" alt="Agilidad">
-    <button id="lagilcontinuar" type="button" data-target="lagilpost-screen"></button>
-  </div>
-
-  <div id="wfuerzapost-screen" class="screen">
-    <img src="wfuerzapost.png" alt="Resultado fuerza">
-    <button id="wfuerzapostcontinuar" type="button" data-target="win-screen"></button>
-  </div>
-
-  <div id="wastuciapost-screen" class="screen">
-    <img src="wastuciapost.png" alt="Resultado astucia">
-    <button id="wastuciapostcontinuar" type="button" data-target="win-screen"></button>
-  </div>
-
-  <div id="lagilpost-screen" class="screen">
-    <img src="lagilpost.png" alt="Resultado agilidad">
-    <button id="lagilpostcontinuar" type="button" data-target="elegir-screen"></button>
+    <button id="cortar-frutillas-boton" type="button" data-target="???"></button>
   </div>
 
   <div id="win-screen" class="screen">
@@ -108,10 +78,16 @@
     <button id="wincontinuar" type="button" data-target="after-screen"></button>
   </div>
 
-  <div id="after-screen" class="screen">
-    <img src="after.png" alt="Final">
-    <button id="aftermenu" type="button" data-target="menu-screen"></button>
+  <div id="perdiste-screen" class="screen">
+    <img src="Newsimgs/PERDISTE.png" alt="Perdiste">
+    <button id="perdiste-menu" type="button" data-target="menu-screen"></button>
   </div>
+
+  <dialog id="error-dialog" aria-labelledby="error-dialog-title">
+    <h2 id="error-dialog-title">Ingrediente incorrecto</h2>
+    <p id="error-dialog-message"></p>
+    <button id="error-dialog-close" type="button">Continuar</button>
+  </dialog>
 
   <script src="script.js"></script>
 </body>
