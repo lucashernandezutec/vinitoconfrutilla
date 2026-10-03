@@ -15,11 +15,28 @@ body {
   display: block;
 }
 
-.screen img {
+.scene {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.scene--16-9 {
+  width: min(100vw, 177.78vh);
+  aspect-ratio: 16 / 9;
+}
+
+.scene--ingredientes {
+  width: min(100vw, 141.451613vh);
+  aspect-ratio: 3508 / 2480;
+}
+
+.scene img {
   display: block;
-  width: 100vw;
-  height: 100vh;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
   user-select: none;
   pointer-events: none;
 }
@@ -33,10 +50,10 @@ button {
 }
 
 #comenzar {
-  top: 38%;
-  left: 30%;
-  width: 40%;
-  height: 24%;
+  top: 38.5%;
+  left: 27%;
+  width: 46%;
+  height: 23%;
 }
 
 #perdiste-menu {
@@ -49,13 +66,11 @@ button {
 /* SVG que se coloca exactamente
    encima de la imagen */
 .ingredientes-overlay {
-    position: absolute;
-    inset: 0;
-
-    width: 100vw;
-    height: 100vh;
-
-    pointer-events: none;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
 /* Cada zona seleccionable */
@@ -84,7 +99,7 @@ button {
 
 /* Cuando está seleccionado */
 .ingrediente.seleccionado {
-    fill: rgba(0, 177, 231, 0.20);
+    fill: rgba(231, 0, 219, 0.2);
     stroke: #ba00d377;
 
     filter: drop-shadow(0 0 8px #fdfdfd70);
@@ -127,6 +142,60 @@ button {
 
 #error-dialog::backdrop {
     background: rgba(0, 0, 0, 0.7);
+}
+
+#recipe-help {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 1000;
+  width: 44px;
+  height: 44px;
+  border: 2px solid #ba00d377;
+  border-radius: 50%;
+  background: #171717;
+  color: #fff;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+#recipe-dialog {
+  width: min(360px, calc(100vw - 64px));
+  padding: 24px;
+  border: 2px solid #ba00d377;
+  border-radius: 12px;
+  background: #171717;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+#recipe-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+#recipe-dialog h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+#recipe-dialog ol {
+  padding-left: 28px;
+}
+
+#recipe-dialog li {
+  min-height: 1.5em;
+}
+
+#recipe-dialog-close {
+  position: static;
+  display: block;
+  margin: 16px auto 0;
+  padding: 10px 20px;
+  border: 1px solid #ba00d377;
+  border-radius: 6px;
+  background: #62006e77;
+  color: #fff;
+  font-size: 16px;
 }
 
 #error-dialog h2 {

@@ -8,8 +8,10 @@
 </head>
 <body>
   <div id="menu-screen" class="screen active">
-    <img src="Newsimgs/mainmenu.jpg" alt="Menú principal">
-    <button id="comenzar" type="button" data-target="ingredientes-screen"></button>
+    <div class="scene scene--16-9">
+      <img src="Newsimgs/mainmenu.jpg" alt="Menú principal">
+      <button id="comenzar" type="button" data-target="ingredientes-screen"></button>
+    </div>
   </div>
 
 <!-- <div id="ingredientes-inicial" class="screen">
@@ -18,70 +20,95 @@
   </div> -->
 
   <div id="ingredientes-screen" class="screen">
-    <img src="Newsimgs/ingredientes.PNG" alt="Ingredientes">
-    <svg class="ingredientes-overlay"
-         viewBox="0 0 1536 1024"
-         preserveAspectRatio="xMidYMid meet">
+    <div class="scene scene--ingredientes">
+      <img src="Newsimgs/ingredientes.PNG" alt="Ingredientes">
+      <svg class="ingredientes-overlay"
+           viewBox="0 0 1536 1085.883692"
+           preserveAspectRatio="xMidYMid meet">
 
         <!-- Vino Tinto -->
         <polygon
         class="ingrediente" data-nombre="Vino Tinto"
-        points="421,100 489,179 489,207 473,322 400,344 380,351 339,341 299,319 299,267 299,220 298,175 308,145 347,115 347,57 361,26 386,25 399,22 425,47" />
+        points="411,100 479,179 479,207 463,352 390,364 370,371 329,361 289,359 279,267 270,220 288,175 300,145 337,115 337,57 351,26 376,25 389,22 415,47" />
 
         <!-- LICUADORA -->
         <polygon
         class="ingrediente" data-nombre="Licuadora"
-        points="630,156 660,313 625,436 648,463 736,469 828,450 838,423 804,301 844,277 844,166 794,106 663,107" />
+        points="630,146 660,303 625,466 648,473 736,489 828,470 838,413 814,299 844,267 844,176 794,110 663,110" />
 
         <!-- AZÚCAR -->
         <polygon
         class="ingrediente" data-nombre="Azucar"
-        points="1240,97 1170,92 1098,168 1098,318 1197,382 1261,383 1285,353 1283,164" />
+        points="1240,97 1170,92 1115,148 1118,300 1127,362 1261,413 1320,363 1305,184" />
 
-        <!-- CHOCOLATE -->
+        <!-- HIELOS -->
         <polygon
         class="ingrediente" data-nombre="Hielos"
-        points="240,419 299,337 442,414 399,496" />
+        points="220,440 279,357 422,434 379,516" />
 
         <!-- VASO -->
         <polygon
         class="ingrediente" data-nombre="Vaso"
-        points="887,255 907,433 951,446 1005,434 1013,251" />
+        points="897,265 917,460 961,465 1015,460 1023,266" />
 
         <!-- CUCHILLO -->
         <polygon
-        class="ingrediente" data-nombre="Cuchillo"
-        points="857,460 1076,552 1093,517 1000,459 856,422" />
+        class="ingrediente" data-nombre="Cuchillo" data-requerido="true"
+        points="857,495 1076,572 1093,557 1000,485 856,442" />
 
         <!-- FRUTILLAS -->
         <polygon
-        class="ingrediente" data-nombre="Frutillas" data-correcto="true"
-        points="1255,400 1283,453 1272,530 1214,549 1119,536 1093,451 1129,401" />
+        class="ingrediente" data-nombre="Frutillas" data-requerido="true"
+        points="1285,427 1313,483 1292,560 1244,579 1139,566 1113,481 1149,431" />
 
         <!-- TABLA -->
         <polygon
         class="ingrediente" data-nombre="Tabla"
-        points="434,439 558,569 661,484 547,366 451,337 423,355" />
+        points="424,469 558,600 661,524 507,376 450,359 419,375" />
 
-    </svg>
+      </svg>
+    </div>
     <!-- Cartel que aparece al pasar el mouse -->
     <div id="tooltip-ingrediente"></div>
 </div>
 
   <div id="cortar-frutillas" class="screen">
-    <img src="Newsimgs/preparandofrutillas.PNG" alt="Cortar frutillas">
-    <button id="cortar-frutillas-boton" type="button" data-target="???"></button>
+    <div class="scene scene--ingredientes">
+      <img src="Newsimgs/preparandofrutillas.PNG" alt="Cortar frutillas">
+      <button id="cortar-frutillas-boton" type="button" data-target="???"></button>
+    </div>
   </div>
 
   <div id="win-screen" class="screen">
-    <img src="win.png" alt="Victoria">
-    <button id="wincontinuar" type="button" data-target="after-screen"></button>
+    <div class="scene scene--16-9">
+      <img src="win.png" alt="Victoria">
+      <button id="wincontinuar" type="button" data-target="after-screen"></button>
+    </div>
   </div>
 
   <div id="perdiste-screen" class="screen">
-    <img src="Newsimgs/PERDISTE.png" alt="Perdiste">
-    <button id="perdiste-menu" type="button" data-target="menu-screen"></button>
+    <div class="scene scene--16-9">
+      <img src="Newsimgs/PERDISTE.png" alt="Perdiste">
+      <button id="perdiste-menu" type="button" data-target="menu-screen"></button>
+    </div>
   </div>
+
+  <button id="recipe-help" type="button" aria-label="Abrir receta" aria-haspopup="dialog">
+    ?
+  </button>
+
+  <dialog id="recipe-dialog" aria-labelledby="recipe-dialog-title">
+    <h2 id="recipe-dialog-title">Receta del Vino con Frutilla</h2>
+    <ol>
+      <li>Cortar las frutillas</li>
+      <li aria-label="Paso 2 vacío">&nbsp;</li>
+      <li aria-label="Paso 3 vacío">&nbsp;</li>
+      <li aria-label="Paso 4 vacío">&nbsp;</li>
+      <li aria-label="Paso 5 vacío">&nbsp;</li>
+      <li aria-label="Paso 6 vacío">&nbsp;</li>
+    </ol>
+    <button id="recipe-dialog-close" type="button">Cerrar</button>
+  </dialog>
 
   <dialog id="error-dialog" aria-labelledby="error-dialog-title">
     <h2 id="error-dialog-title">Ingrediente incorrecto</h2>

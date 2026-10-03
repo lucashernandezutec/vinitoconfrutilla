@@ -1,9 +1,17 @@
 const screens = document.querySelectorAll('.screen');
 let erroresIngredientes = 0;
+const ingredientesRequeridos = new Set(
+    document.querySelectorAll('.ingrediente[data-requerido="true"]')
+);
+const ingredientesSeleccionados = new Set();
 
 function showScreen(screenId) {
   if (screenId === 'menu-screen') {
     erroresIngredientes = 0;
+    ingredientesSeleccionados.clear();
+    ingredientesRequeridos.forEach((ingrediente) => {
+      ingrediente.classList.remove('seleccionado');
+    });
   }
 
   screens.forEach((screen) => {
@@ -34,6 +42,18 @@ document.querySelectorAll('button[data-target]').forEach((button) => {
 
 window.addEventListener('hashchange', initFromHash);
 initFromHash();
+
+const recipeHelp = document.getElementById('recipe-help');
+const recipeDialog = document.getElementById('recipe-dialog');
+const recipeDialogClose = document.getElementById('recipe-dialog-close');
+
+recipeHelp.addEventListener('click', () => {
+    recipeDialog.showModal();
+});
+
+recipeDialogClose.addEventListener('click', () => {
+    recipeDialog.close();
+});
 
 
 
@@ -67,23 +87,6 @@ ingredientes.forEach((ingrediente) => {
         tooltipIngrediente.style.display = 'none';
     });
 
-    // Click / selección
-    ingrediente.addEventListener('click', () => {
-
-        // Quita la selección anterior
-        ingredientes.forEach((item) => {
-            item.classList.remove('seleccionado');
-        });
-
-        // Selecciona el actual
-        ingrediente.classList.add('seleccionado');
-
-        console.log(
-            'Ingrediente seleccionado:',
-            ingrediente.dataset.nombre
-        );
-    });
-
 });
 
 const errorDialog = document.getElementById('error-dialog');
@@ -104,14 +107,16 @@ ingredientes.forEach((ingrediente) => {
 
     ingrediente.addEventListener('click', () => {
 
-        const esCorrecto =
-            ingrediente.dataset.correcto === 'true';
+        if (ingredientesRequeridos.has(ingrediente)) {
+            ingredientesSeleccionados.add(ingrediente);
+            ingrediente.classList.add('seleccionado');
 
-        // FRUTILLAS
-        if (esCorrecto) {
+            const seleccionoTodos = Array.from(ingredientesRequeridos)
+                .every((item) => ingredientesSeleccionados.has(item));
 
-            showScreen('cortar-frutillas');
-
+            if (seleccionoTodos) {
+                showScreen('cortar-frutillas');
+            }
             return;
         }
 
@@ -119,7 +124,7 @@ ingredientes.forEach((ingrediente) => {
         erroresIngredientes++;
 
         errorDialogMessage.textContent =
-            `¡Ese no es el ingrediente que necesitás!\n\n` +
+            `¡¡Este no es el ingrediente que necesitás ahora!!\n\n` +
             `Intentos incorrectos: ${erroresIngredientes}/3`;
         errorDialogClose.textContent =
             erroresIngredientes >= 3 ? 'Rendirte' : 'Continuar';
