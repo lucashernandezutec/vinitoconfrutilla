@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SyF Batalla</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="menu-screen" class="screen active">
+    <img src="menu.png" alt="Menú principal">
+    <button id="jugar" type="button" data-target="prebatalla-screen"></button>
+    <button id="quees" type="button" data-target="quees-screen"></button>
+    <button id="trampa" type="button" data-target="trampa-screen"></button>
+  </div>
+
+  <div id="quees-screen" class="screen">
+    <img src="quees.png" alt="¿Qué es?">
+    <button id="queesregresar" type="button" data-target="menu-screen"></button>
+  </div>
+
+  <div id="trampa-screen" class="screen">
+    <img src="trampa.png" alt="Trampa">
+    <button id="tramparegresar" type="button" data-target="menu-screen"></button>
+  </div>
+
+  <div id="prebatalla-screen" class="screen">
+    <img src="prebatalla.png" alt="Pre batalla">
+    <button id="prebatallacontinuar" type="button" data-target="elegir-screen"></button>
+  </div>
+
+  <div id="elegir-screen" class="screen">
+    <img src="elegir.png" alt="Elegir habilidad">
+    <button id="fuerzaboton" type="button" data-target="wfuerza-screen"></button>
+    <button id="astuciaboton" type="button" data-target="wastucia-screen"></button>
+    <button id="agilidadboton" type="button" data-target="lagil-screen"></button>
+  </div>
+
+  <div id="wfuerza-screen" class="screen">
+    <img src="wfuerza.png" alt="Fuerza">
+    <button id="wfuerzacontinuar" type="button" data-target="wfuerzapost-screen"></button>
+  </div>
+
+  <div id="wastucia-screen" class="screen">
+    <img src="wastucia.png" alt="Astucia">
+    <button id="wastuciacontinuar" type="button" data-target="wastuciapost-screen"></button>
+  </div>
+
+  <div id="lagil-screen" class="screen">
+    <img src="lagil.png" alt="Agilidad">
+    <button id="lagilcontinuar" type="button" data-target="lagilpost-screen"></button>
+  </div>
+
+  <div id="wfuerzapost-screen" class="screen">
+    <img src="wfuerzapost.png" alt="Resultado fuerza">
+    <button id="wfuerzapostcontinuar" type="button" data-target="win-screen"></button>
+  </div>
+
+  <div id="wastuciapost-screen" class="screen">
+    <img src="wastuciapost.png" alt="Resultado astucia">
+    <button id="wastuciapostcontinuar" type="button" data-target="win-screen"></button>
+  </div>
+
+  <div id="lagilpost-screen" class="screen">
+    <img src="lagilpost.png" alt="Resultado agilidad">
+    <button id="lagilpostcontinuar" type="button" data-target="elegir-screen"></button>
+  </div>
+
+  <div id="win-screen" class="screen">
+    <img src="win.png" alt="Victoria">
+    <button id="wincontinuar" type="button" data-target="after-screen"></button>
+  </div>
+
+  <div id="after-screen" class="screen">
+    <img src="after.png" alt="Final">
+    <button id="aftermenu" type="button" data-target="menu-screen"></button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

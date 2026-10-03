@@ -1,0 +1,116 @@
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background: #000;
+}
+
+.screen {
+  position: fixed;
+  inset: 0;
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
+
+.screen img {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+button {
+  position: absolute;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  padding: 0;
+}
+
+#jugar {
+  top: 43%;
+  left: 39%;
+  width: 22%;
+  height: 9%;
+}
+
+#quees {
+  top: 55%;
+  left: 39%;
+  width: 22%;
+  height: 9%;
+}
+
+#trampa {
+  top: 67%;
+  left: 39%;
+  width: 22%;
+  height: 9%;
+}
+
+#queesregresar {
+  top: 87%;
+  left: 34%;
+  width: 32%;
+  height: 8%;
+}
+
+#tramparegresar {
+  top: 4%;
+  left: 9%;
+  width: 6%;
+  height: 4%;
+}
+
+#prebatallacontinuar,
+#wincontinuar,
+#wfuerzacontinuar,
+#wastuciacontinuar,
+#lagilcontinuar {
+  top: 92%;
+  left: 44%;
+  width: 12%;
+  height: 7%;
+}
+
+#fuerzaboton {
+  top: 55%;
+  left: 14%;
+  width: 22%;
+  height: 29%;
+}
+
+#astuciaboton {
+  top: 55%;
+  left: 40%;
+  width: 20%;
+  height: 29%;
+}
+
+#agilidadboton {
+  top: 55%;
+  left: 64%;
+  width: 21%;
+  height: 29%;
+}
+
+#wfuerzapostcontinuar,
+#wastuciapostcontinuar,
+#lagilpostcontinuar {
+  top: 75%;
+  left: 40%;
+  width: 22%;
+  height: 10%;
+}
+
+#aftermenu {
+  top: 83%;
+  left: 40%;
+  width: 22%;
+  height: 10%;
+}
