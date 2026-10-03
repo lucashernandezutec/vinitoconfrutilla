@@ -26,17 +26,17 @@ body {
 
 button {
   position: absolute;
-  border: none;
+  border: 1px solid #00b1e7;
   cursor: pointer;
   background: transparent;
   padding: 0;
 }
 
-#jugar {
-  top: 43%;
-  left: 39%;
-  width: 22%;
-  height: 9%;
+#comenzar {
+  top: 39%;
+  left: 30.5%;
+  width: 39%;
+  height: 22%;
 }
 
 #quees {
@@ -61,6 +61,13 @@ button {
 }
 
 #tramparegresar {
+  top: 4%;
+  left: 9%;
+  width: 6%;
+  height: 4%;
+}
+
+#ingredientes{
   top: 4%;
   left: 9%;
   width: 6%;

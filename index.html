@@ -3,30 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SyF Batalla</title>
+  <title>Vino con Frutilla</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="menu-screen" class="screen active">
-    <img src="menu.png" alt="Menú principal">
-    <button id="jugar" type="button" data-target="prebatalla-screen"></button>
-    <button id="quees" type="button" data-target="quees-screen"></button>
-    <button id="trampa" type="button" data-target="trampa-screen"></button>
+    <img src="Newsimgs/mainmenu.jpg" alt="Menú principal">
+    <button id="comenzar" type="button" data-target="prebatalla-screen"></button>
   </div>
 
-  <div id="quees-screen" class="screen">
-    <img src="quees.png" alt="¿Qué es?">
-    <button id="queesregresar" type="button" data-target="menu-screen"></button>
-  </div>
-
-  <div id="trampa-screen" class="screen">
-    <img src="trampa.png" alt="Trampa">
-    <button id="tramparegresar" type="button" data-target="menu-screen"></button>
-  </div>
-
-  <div id="prebatalla-screen" class="screen">
-    <img src="prebatalla.png" alt="Pre batalla">
-    <button id="prebatallacontinuar" type="button" data-target="elegir-screen"></button>
+  <div id="ingredientes" class="screen">
+    <img src="Newsimgs/ingredientes.PNG" alt="ingredientes">
+    <button id="ingredientes" type="button" data-target="elegir-screen"></button>
   </div>
 
   <div id="elegir-screen" class="screen">
