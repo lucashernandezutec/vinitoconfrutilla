@@ -166,15 +166,38 @@
 
   <div id="azucarear" class="screen">
     <div class="scene scene--16-9">
-      <img src="Newsimgs/cuchillo.PNG" alt="azucarear">
+      <img src="Newsimgs/Lic6.jpg.jpeg" alt="azucarear">
       <button id="azucarear-boton" type="button" data-target="menu-screen"></button>
     </div>
   </div>
 
-    <div id="soloaguayvaso" class="screen">
-    <div class="scene scene--16-9">
+        <div id="soloaguayvaso" class="screen">
+    <div class="scene scene--ingredientes">
       <img src="Newsimgs/soloaguayvaso.png" alt="soloaguayvaso">
-      <button id="soloaguayvaso-boton" type="button" data-target="menu-screen"></button>
+      <svg class="ingredientes-overlay"
+           viewBox="0 0 1536 1085.883692"
+           preserveAspectRatio="xMidYMid meet">
+
+        <!-- HIELOS -->
+        <polygon
+        class="ingrediente" data-nombre="Hielos"
+        points="220,440 279,357 422,434 379,516" />
+
+        <!-- VASO -->
+        <polygon
+        class="ingrediente" data-nombre="Vaso"
+        points="897,265 917,460 961,465 1015,460 1023,266" />
+
+      </svg>
+    </div>
+    <!-- Cartel que aparece al pasar el mouse -->
+    <div id="tooltip-ingrediente"></div>
+</div>
+
+  <div id="servir" class="screen">
+    <div class="scene scene--16-9">
+      <img id="servir-frame" src="Newsimgs/Vaso1.jpg.jpeg" alt="Servir">
+      <button id="servir-boton" type="button" data-target="menu-screen"></button>
     </div>
   </div>
 
@@ -201,7 +224,7 @@
     <h2 id="difficulty-dialog-title">Elegir dificultad</h2>
     <div class="difficulty-options">
       <button type="button" data-difficulty="facil">Novato</button>
-      <button type="button" data-difficulty="dificil">Pro</button>
+      <button type="button" data-difficulty="dificil">Experto</button>
     </div>
   </dialog>
 
@@ -221,6 +244,12 @@
     <h2 id="error-dialog-title">Ingrediente incorrecto</h2>
     <p id="error-dialog-message"></p>
     <button id="error-dialog-close" type="button">Continuar</button>
+  </dialog>
+
+  <dialog id="congratulations-dialog" aria-labelledby="congratulations-dialog-title">
+    <h2 id="congratulations-dialog-title">¡Felicidades!</h2>
+    <p>Preparaste un vino con frutillas muy rico, ahora podés ir a disfrutar de la Semana de Lavalleja.</p>
+    <button id="congratulations-dialog-close" type="button">Salir</button>
   </dialog>
 
   <script src="script.js"></script>
