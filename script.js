@@ -1,6 +1,9 @@
 const screens = document.querySelectorAll('.screen');
 const cuttingSound = new Audio('Newsimgs/freesound_community-cutting-strawberries-35085.mp3');
+const gameTimer = document.getElementById('game-timer');
 let erroresIngredientes = 0;
+let gameTimerDeadline = 0;
+let gameTimerInterval = null;
 const ingredientesRequeridos = new Set(
   document.querySelectorAll('#ingredientes-screen .ingrediente[data-requerido="true"]')
 );
@@ -30,6 +33,31 @@ function stopLicuarAnimation() {
   licuarAnimationTimer = null;
   blenderSound.pause();
   blenderSound.currentTime = 0;
+}
+
+function stopGameTimer() {
+  window.clearInterval(gameTimerInterval);
+  gameTimerInterval = null;
+}
+
+function updateGameTimer() {
+  const secondsRemaining = Math.max(0, Math.ceil((gameTimerDeadline - Date.now()) / 1000));
+  const minutes = Math.floor(secondsRemaining / 60);
+  const seconds = secondsRemaining % 60;
+  gameTimer.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+  if (secondsRemaining === 0) {
+    stopGameTimer();
+    showScreen('perdiste-screen');
+  }
+}
+
+function startGameTimer(durationSeconds) {
+  stopGameTimer();
+  gameTimer.hidden = false;
+  gameTimerDeadline = Date.now() + durationSeconds * 1000;
+  updateGameTimer();
+  gameTimerInterval = window.setInterval(updateGameTimer, 250);
 }
 
 function startLicuarAnimation() {
@@ -65,12 +93,20 @@ function startLicuarAnimation() {
 
 function showScreen(screenId) {
   if (screenId === 'menu-screen') {
+    stopGameTimer();
+    gameTimerDeadline = 0;
+    gameTimer.textContent = '03:00';
+    gameTimer.hidden = true;
     erroresIngredientes = 0;
     ingredientesSeleccionados.clear();
     ingredientesSinfSeleccionados.clear();
     [...ingredientesRequeridos, ...ingredientesSinfRequeridos].forEach((ingrediente) => {
       ingrediente.classList.remove('seleccionado');
     });
+  }
+
+  if (screenId === 'perdiste-screen' || screenId === 'ganaste-screen') {
+    stopGameTimer();
   }
 
   screens.forEach((screen) => {
@@ -121,7 +157,8 @@ document.querySelectorAll('button[data-target]').forEach((button) => {
 });
 
 window.addEventListener('hashchange', initFromHash);
-initFromHash();
+showScreen('intro-screen');
+window.setTimeout(() => showScreen('menu-screen'), 3000);
 
 const recipeHelp = document.getElementById('recipe-help');
 const comenzar = document.getElementById('comenzar');
@@ -137,6 +174,8 @@ difficultyDialog.querySelectorAll('[data-difficulty]').forEach((button) => {
   button.addEventListener('click', () => {
     recipeHelp.hidden = button.dataset.difficulty === 'dificil';
     difficultyDialog.close();
+    const durationSeconds = button.dataset.difficulty === 'dificil' ? 60 : 180;
+    startGameTimer(durationSeconds);
     showScreen('ingredientes-screen');
   });
 });

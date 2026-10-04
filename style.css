@@ -27,6 +27,33 @@ body {
   aspect-ratio: 16 / 9;
 }
 
+#intro-screen .scene {
+  animation: intro-logo-transition 3s ease-in-out both;
+}
+
+@keyframes intro-logo-transition {
+  0% {
+    opacity: 0;
+    filter: blur(12px);
+  }
+  15%, 85% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    filter: blur(12px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #intro-screen .scene {
+    animation: none;
+    opacity: 1;
+    filter: none;
+  }
+}
+
 .scene--ingredientes {
   width: min(100vw, 141.451613vh);
   aspect-ratio: 3508 / 2480;
@@ -43,7 +70,6 @@ body {
 
 button {
   position: absolute;
-  border: 1px solid #00b1e7;
   cursor: pointer;
   background: transparent;
   padding: 0;
@@ -157,6 +183,27 @@ button {
   color: #fff;
   font-size: 26px;
   font-weight: bold;
+}
+
+#intro-screen.active ~ #recipe-help {
+  display: none;
+}
+
+.game-timer {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+  min-width: 86px;
+  padding: 9px 12px;
+  border: 2px solid #ba00d377;
+  border-radius: 6px;
+  background: #171717;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
 }
 
 #recipe-dialog {

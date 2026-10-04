@@ -7,8 +7,14 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  
-  <div id="menu-screen" class="screen active">
+
+  <div id="intro-screen" class="screen active">
+    <div class="scene scene--16-9">
+      <img src="Newsimgs/logos inicio.png" alt="Logo de inicio">
+    </div>
+  </div>
+
+  <div id="menu-screen" class="screen">
     <div class="scene scene--16-9">
       <img src="Newsimgs/mainmenu.jpg" alt="Menú principal">
       <button id="comenzar" type="button"></button>
@@ -64,7 +70,7 @@
 
         <!-- TABLA -->
         <polygon
-        class="ingrediente" data-nombre="Tabla"
+        class="ingrediente" data-nombre="Tabla" data-requerido="true"
         points="424,469 558,600 661,524 507,376 450,359 419,375" />
 
       </svg>
@@ -179,9 +185,17 @@
     </div>
   </div>
 
+    <div id="ganaste-screen" class="screen">
+    <div class="scene scene--16-9">
+      <img src="Newsimgs/Buenfinal.png" alt="Ganaste">
+      <button id="ganaste-menu" type="button" data-target="menu-screen"></button>
+    </div>
+  </div>
+
   <button id="recipe-help" type="button" aria-label="Abrir receta" aria-haspopup="dialog">
     ?
   </button>
+  <div id="game-timer" class="game-timer" role="timer" aria-label="Tiempo restante" hidden>03:00</div>
 
   <dialog id="difficulty-dialog" aria-labelledby="difficulty-dialog-title">
     <h2 id="difficulty-dialog-title">Elegir dificultad</h2>
