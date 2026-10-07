@@ -3,17 +3,17 @@ const cuttingSound = new Audio('Newsimgs/freesound_community-cutting-strawberrie
 const folcloreMusic = new Audio('Newsimgs/Folclore.mp3');
 folcloreMusic.loop = true;
 const winSong = new Audio('Newsimgs/winsong.mp3');
+winSong.loop = true;
 const gameOverSound = new Audio('Newsimgs/gameover.mp3');
 const sugarSound = new Audio('Newsimgs/azucar.mp3');
-const gameTimer = document.getElementById('game-timer');
-const congratulationsDialog = document.getElementById('congratulations-dialog');
 let erroresIngredientes = 0;
-let maxErroresIngredientes = 3;
-let gameTimerDeadline = 0;
-let gameTimerInterval = null;
+const maxErroresIngredientes = 3;
 let azucarearAdvanceTimer = null;
 let sugarSoundTimer = null;
-let congratulationsDialogTimer = null;
+let finaleSequenceTimer = null;
+let finaleSequenceActive = false;
+let recetitaTimer = null;
+let recetitaReturnScreen = 'menu-screen';
 const ingredientesRequeridos = new Set(
   document.querySelectorAll('#ingredientes-screen .ingrediente[data-requerido="true"]')
 );
@@ -45,6 +45,7 @@ const iceSound = new Audio('Newsimgs/ice.mp3');
 const wineSound = new Audio('Newsimgs/wine.mp3');
 let licuarAnimationTimer = null;
 let servirAnimationTimer = null;
+let servirTransitionTimer = null;
 let folcloreGestureListener = null;
 
 licuarFrames.slice(1).forEach((frameSource) => {
@@ -67,6 +68,8 @@ function stopLicuarAnimation() {
 function stopServirAnimation() {
   window.clearInterval(servirAnimationTimer);
   servirAnimationTimer = null;
+  window.clearTimeout(servirTransitionTimer);
+  servirTransitionTimer = null;
   iceSound.pause();
   iceSound.currentTime = 0;
   wineSound.pause();
@@ -88,7 +91,11 @@ function startServirAnimation() {
     frameIndex += 1;
     if (frameIndex >= servirFrames.length) {
       stopServirAnimation();
-      showScreen('ganaste-screen');
+      servirTransitionTimer = window.setTimeout(() => {
+        if (document.getElementById('servir').classList.contains('active')) {
+          showScreen('ganaste-screen');
+        }
+      }, 1000);
       return;
     }
 
@@ -106,11 +113,6 @@ iceSound.addEventListener('ended', () => {
     console.error('No se pudo reproducir el sonido de vino.', error);
   });
 });
-
-function stopGameTimer() {
-  window.clearInterval(gameTimerInterval);
-  gameTimerInterval = null;
-}
 
 function stopFolcloreMusic() {
   if (folcloreGestureListener) {
@@ -162,26 +164,6 @@ function stopSugarSound() {
   sugarSound.currentTime = 0;
 }
 
-function updateGameTimer() {
-  const secondsRemaining = Math.max(0, Math.ceil((gameTimerDeadline - Date.now()) / 1000));
-  const minutes = Math.floor(secondsRemaining / 60);
-  const seconds = secondsRemaining % 60;
-  gameTimer.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-
-  if (secondsRemaining === 0) {
-    stopGameTimer();
-    showScreen('perdiste-screen');
-  }
-}
-
-function startGameTimer(durationSeconds) {
-  stopGameTimer();
-  gameTimer.hidden = false;
-  gameTimerDeadline = Date.now() + durationSeconds * 1000;
-  updateGameTimer();
-  gameTimerInterval = window.setInterval(updateGameTimer, 250);
-}
-
 function startLicuarAnimation() {
   stopLicuarAnimation();
 
@@ -214,16 +196,28 @@ function startLicuarAnimation() {
 }
 
 function showScreen(screenId) {
+  window.clearTimeout(finaleSequenceTimer);
+  finaleSequenceTimer = null;
+
+  if (screenId !== 'recetita') {
+    window.clearTimeout(recetitaTimer);
+    recetitaTimer = null;
+  }
+
+  if (screenId === 'ganaste-screen') {
+    finaleSequenceActive = true;
+  } else if (!['creditos', 'inscribite', 'intro-screen'].includes(screenId)) {
+    finaleSequenceActive = false;
+  }
+
   window.clearTimeout(azucarearAdvanceTimer);
   azucarearAdvanceTimer = null;
   window.clearTimeout(sugarSoundTimer);
   sugarSoundTimer = null;
   stopSugarSound();
-  window.clearTimeout(congratulationsDialogTimer);
-  congratulationsDialogTimer = null;
   stopServirAnimation();
 
-  if (screenId !== 'ganaste-screen') {
+  if (!finaleSequenceActive) {
     stopWinSong();
   }
 
@@ -231,16 +225,8 @@ function showScreen(screenId) {
     stopGameOverSound();
   }
 
-  if (screenId !== 'ganaste-screen' && congratulationsDialog.open) {
-    congratulationsDialog.close();
-  }
-
   if (screenId === 'menu-screen') {
-    stopGameTimer();
     startFolcloreMusic();
-    gameTimerDeadline = 0;
-    gameTimer.textContent = '03:00';
-    gameTimer.hidden = true;
     erroresIngredientes = 0;
     ingredientesSeleccionados.clear();
     ingredientesSinfSeleccionados.clear();
@@ -251,7 +237,6 @@ function showScreen(screenId) {
   }
 
   if (screenId === 'perdiste-screen' || screenId === 'ganaste-screen') {
-    stopGameTimer();
     stopFolcloreMusic();
   }
 
@@ -303,11 +288,35 @@ function showScreen(screenId) {
     winSong.play().catch((error) => {
       console.error('No se pudo reproducir la música de victoria.', error);
     });
-    congratulationsDialogTimer = window.setTimeout(() => {
+    finaleSequenceTimer = window.setTimeout(() => {
       if (document.getElementById('ganaste-screen').classList.contains('active')) {
-        congratulationsDialog.showModal();
+        showScreen('creditos');
       }
     }, 5000);
+  }
+
+  if (screenId === 'creditos' && finaleSequenceActive) {
+    finaleSequenceTimer = window.setTimeout(() => {
+      if (document.getElementById('creditos').classList.contains('active')) {
+        showScreen('inscribite');
+      }
+    }, 5000);
+  }
+
+  if (screenId === 'inscribite' && finaleSequenceActive) {
+    finaleSequenceTimer = window.setTimeout(() => {
+      if (document.getElementById('inscribite').classList.contains('active')) {
+        showScreen('intro-screen');
+      }
+    }, 10000);
+  }
+
+  if (screenId === 'intro-screen' && finaleSequenceActive) {
+    finaleSequenceTimer = window.setTimeout(() => {
+      if (document.getElementById('intro-screen').classList.contains('active')) {
+        showScreen('menu-screen');
+      }
+    }, 3000);
   }
 
   if (screenId === 'perdiste-screen') {
@@ -320,6 +329,17 @@ function showScreen(screenId) {
 
 cuttingSound.addEventListener('ended', () => {
   if (document.getElementById('cortar-frutillas').classList.contains('active')) {
+    showScreen('ingredientes-sinf-screen');
+  }
+});
+
+cuttingSound.addEventListener('timeupdate', () => {
+  if (
+    document.getElementById('cortar-frutillas').classList.contains('active')
+    && Number.isFinite(cuttingSound.duration)
+    && cuttingSound.duration - cuttingSound.currentTime <= 1
+  ) {
+    cuttingSound.pause();
     showScreen('ingredientes-sinf-screen');
   }
 });
@@ -342,39 +362,31 @@ document.querySelectorAll('button[data-target]').forEach((button) => {
 });
 
 window.addEventListener('hashchange', initFromHash);
-showScreen('intro-screen');
-window.setTimeout(() => showScreen('menu-screen'), 3000);
+showScreen('menu-screen');
 
 const recipeHelp = document.getElementById('recipe-help');
 const comenzar = document.getElementById('comenzar');
-const difficultyDialog = document.getElementById('difficulty-dialog');
-const recipeDialog = document.getElementById('recipe-dialog');
-const recipeDialogClose = document.getElementById('recipe-dialog-close');
+const recetitaScreen = document.getElementById('recetita');
+
+function closeRecetita() {
+  window.clearTimeout(recetitaTimer);
+  recetitaTimer = null;
+  showScreen(recetitaReturnScreen);
+}
 
 comenzar.addEventListener('click', () => {
-  difficultyDialog.showModal();
-});
-
-difficultyDialog.querySelectorAll('[data-difficulty]').forEach((button) => {
-  button.addEventListener('click', () => {
-    recipeHelp.hidden = button.dataset.difficulty === 'dificil';
-    difficultyDialog.close();
-    erroresIngredientes = 0;
-    maxErroresIngredientes = button.dataset.difficulty === 'dificil' ? 1 : 3;
-    const durationSeconds = button.dataset.difficulty === 'dificil' ? 60 : 180;
-    startGameTimer(durationSeconds);
-    showScreen('ingredientes-screen');
-  });
+  erroresIngredientes = 0;
+  showScreen('ingredientes-screen');
 });
 
 recipeHelp.addEventListener('click', () => {
-    recipeDialog.showModal();
+  const activeScreen = document.querySelector('.screen.active');
+  recetitaReturnScreen = activeScreen ? activeScreen.id : 'menu-screen';
+  showScreen('recetita');
+  recetitaTimer = window.setTimeout(closeRecetita, 10000);
 });
 
-recipeDialogClose.addEventListener('click', () => {
-    recipeDialog.close();
-});
-
+recetitaScreen.addEventListener('click', closeRecetita);
 
 
 const ingredientes = document.querySelectorAll('.ingrediente');
@@ -412,12 +424,6 @@ ingredientes.forEach((ingrediente) => {
 const errorDialog = document.getElementById('error-dialog');
 const errorDialogMessage = document.getElementById('error-dialog-message');
 const errorDialogClose = document.getElementById('error-dialog-close');
-const congratulationsDialogClose = document.getElementById('congratulations-dialog-close');
-
-congratulationsDialogClose.addEventListener('click', () => {
-    congratulationsDialog.close();
-    showScreen('menu-screen');
-});
 
 errorDialogClose.addEventListener('click', () => {
     errorDialog.close();

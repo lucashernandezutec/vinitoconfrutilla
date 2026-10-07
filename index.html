@@ -8,7 +8,7 @@
 </head>
 <body>
 
-  <div id="intro-screen" class="screen active">
+  <div id="intro-screen" class="screen">
     <div class="scene scene--16-9">
       <img src="Newsimgs/logos inicio.png" alt="Logo de inicio">
     </div>
@@ -201,6 +201,24 @@
     </div>
   </div>
 
+    <div id="recetita" class="screen">
+      <div class="scene scene--16-9">
+        <img id="recetita-frame" src="Newsimgs/RECETA.jpg" alt="Recetita">
+      </div>
+    </div>
+
+        <div id="creditos" class="screen">
+      <div class="scene scene--16-9">
+        <img id="creditos-frame" src="Newsimgs/CREDITOS.jpg" alt="creditos">
+      </div>
+    </div>
+
+            <a id="inscribite" class="screen" href="https://utec.edu.uy/es/educacion/carrera/tecnicatura-en-comunicacion-creativa-y-entretenimiento-digital/" target="_blank" rel="noopener noreferrer" aria-label="Ir a la Tecnicatura en Comunicación Creativa y Entretenimiento Digital de UTEC">
+      <div class="scene scene--16-9">
+        <img id="inscribite-frame" src="Newsimgs/inscribite.jpg" alt="Inscribite">
+      </div>
+    </a>
+
   <div id="perdiste-screen" class="screen">
     <div class="scene scene--16-9">
       <img src="Newsimgs/PERDISTE.png" alt="Perdiste">
@@ -210,46 +228,19 @@
 
     <div id="ganaste-screen" class="screen">
     <div class="scene scene--16-9">
-      <img src="Newsimgs/Buenfinal.png" alt="Ganaste">
+      <img src="Newsimgs/finalnuevo.jpg" alt="Ganaste">
       <button id="ganaste-menu" type="button" data-target="menu-screen"></button>
     </div>
   </div>
 
-  <button id="recipe-help" type="button" aria-label="Abrir receta" aria-haspopup="dialog">
-    ?
+  <button id="recipe-help" type="button" aria-label="Abrir receta">
+    RECETA
   </button>
-  <div id="game-timer" class="game-timer" role="timer" aria-label="Tiempo restante" hidden>03:00</div>
-
-  <dialog id="difficulty-dialog" aria-labelledby="difficulty-dialog-title">
-    <h2 id="difficulty-dialog-title">Elegir dificultad</h2>
-    <div class="difficulty-options">
-      <button type="button" data-difficulty="facil">Novato</button>
-      <button type="button" data-difficulty="dificil">Experto</button>
-    </div>
-  </dialog>
-
-  <dialog id="recipe-dialog" aria-labelledby="recipe-dialog-title">
-    <h2 id="recipe-dialog-title">Receta del Vino con Frutilla</h2>
-    <ol>
-      <li>Cortar las frutillas</li>
-      <li>Agregar las frutillas y el vino a la licuadora</li>
-      <li>Agregar el azúcar</li>
-      <li>Servir en un vaso y agregar hielos</li>
-      <li>Disfrutar del vino con frutilla</li>
-    </ol>
-    <button id="recipe-dialog-close" type="button">Cerrar</button>
-  </dialog>
 
   <dialog id="error-dialog" aria-labelledby="error-dialog-title">
     <h2 id="error-dialog-title">Ingrediente incorrecto</h2>
     <p id="error-dialog-message"></p>
     <button id="error-dialog-close" type="button">Continuar</button>
-  </dialog>
-
-  <dialog id="congratulations-dialog" aria-labelledby="congratulations-dialog-title">
-    <h2 id="congratulations-dialog-title">¡Felicidades!</h2>
-    <p>Preparaste un vino con frutillas muy rico, ahora podés ir a disfrutar de la Semana de Lavalleja.</p>
-    <button id="congratulations-dialog-close" type="button">Salir</button>
   </dialog>
 
   <script src="script.js"></script>

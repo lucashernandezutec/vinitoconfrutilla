@@ -31,6 +31,12 @@ body {
   animation: intro-logo-transition 3s ease-in-out both;
 }
 
+#ganaste-screen.active .scene,
+#creditos.active .scene,
+#inscribite.active .scene {
+  animation: finale-screen-transition 800ms ease-out both;
+}
+
 @keyframes intro-logo-transition {
   0% {
     opacity: 0;
@@ -46,8 +52,27 @@ body {
   }
 }
 
+@keyframes finale-screen-transition {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   #intro-screen .scene {
+    animation: none;
+    opacity: 1;
+    filter: none;
+  }
+
+  #ganaste-screen.active .scene,
+  #creditos.active .scene,
+  #inscribite.active .scene {
     animation: none;
     opacity: 1;
     filter: none;
@@ -161,18 +186,7 @@ button {
     border: 2px solid #ba00d377;
     border-radius: 12px;
     background: #171717;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    text-align: center;
-}
-
-#congratulations-dialog {
-    width: min(440px, calc(100vw - 64px));
-    padding: 24px;
-    border: 2px solid #ba00d377;
-    border-radius: 12px;
-    background: #171717;
-    color: #fff;
+    color: #ffeb3b;
     font-family: Arial, sans-serif;
     text-align: center;
 }
@@ -181,22 +195,19 @@ button {
     background: rgba(0, 0, 0, 0.7);
 }
 
-#congratulations-dialog::backdrop {
-    background: rgba(0, 0, 0, 0.7);
-}
-
 #recipe-help {
   position: fixed;
   top: 16px;
   left: 16px;
   z-index: 1000;
-  width: 44px;
+  min-width: 92px;
   height: 44px;
-  border: 2px solid #ba00d377;
-  border-radius: 50%;
-  background: #171717;
-  color: #fff;
-  font-size: 26px;
+  padding: 0 12px;
+  border: 2px solid #ffeb3b;
+  border-radius: 8px;
+  background: #171717 url("Newsimgs/FONDOBOTON_1.jpg") center / cover no-repeat;
+  color: #ffeb3b;
+  font-size: 16px;
   font-weight: bold;
 }
 
@@ -204,95 +215,8 @@ button {
   display: none;
 }
 
-.game-timer {
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  z-index: 1000;
-  min-width: 86px;
-  padding: 9px 12px;
-  border: 2px solid #ba00d377;
-  border-radius: 6px;
-  background: #171717;
-  color: #fff;
-  font-family: Arial, sans-serif;
-  font-size: 22px;
-  font-variant-numeric: tabular-nums;
-  text-align: center;
-}
-
-#recipe-dialog {
-  width: min(360px, calc(100vw - 64px));
-  padding: 24px;
-  border: 2px solid #ba00d377;
-  border-radius: 12px;
-  background: #171717;
-  color: #fff;
-  font-family: Arial, sans-serif;
-}
-
-#recipe-dialog::backdrop {
-  background: rgba(0, 0, 0, 0.7);
-}
-
-#difficulty-dialog {
-  width: min(360px, calc(100vw - 64px));
-  padding: 24px;
-  border: 2px solid #ba00d377;
-  border-radius: 12px;
-  background: #171717;
-  color: #fff;
-  font-family: Arial, sans-serif;
-}
-
-#difficulty-dialog::backdrop {
-  background: rgba(0, 0, 0, 0.7);
-}
-
-#difficulty-dialog h2 {
-  margin-top: 0;
-  text-align: center;
-}
-
-.difficulty-options {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-}
-
-.difficulty-options button {
-  position: static;
-  padding: 10px 20px;
-  border: 1px solid #ba00d377;
-  border-radius: 6px;
-  background: #62006e77;
-  color: #fff;
-  font-size: 16px;
-}
-
-#recipe-dialog h2 {
-  margin-top: 0;
-  text-align: center;
-}
-
-#recipe-dialog ol {
-  padding-left: 28px;
-}
-
-#recipe-dialog li {
-  min-height: 1.5em;
-}
-
-#recipe-dialog-close {
-  position: static;
-  display: block;
-  margin: 16px auto 0;
-  padding: 10px 20px;
-  border: 1px solid #ba00d377;
-  border-radius: 6px;
-  background: #62006e77;
-  color: #fff;
-  font-size: 16px;
+#recetita.active ~ #recipe-help {
+  display: none;
 }
 
 #error-dialog h2 {
@@ -305,20 +229,6 @@ button {
     border: 1px solid #ba00d377;
     border-radius: 6px;
     background: #62006e77;
-    color: #fff;
-    font-size: 16px;
-}
-
-#congratulations-dialog h2 {
-    margin-top: 0;
-}
-
-#congratulations-dialog-close {
-    position: static;
-    padding: 10px 20px;
-    border: 1px solid #ba00d377;
-    border-radius: 6px;
-    background: #62006e77;
-    color: #fff;
+    color: #ffeb3b;
     font-size: 16px;
 }
