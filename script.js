@@ -2,6 +2,7 @@ const screens = document.querySelectorAll('.screen');
 const cuttingSound = new Audio('Newsimgs/freesound_community-cutting-strawberries-35085.mp3');
 const folcloreMusic = new Audio('Newsimgs/Folclore.mp3');
 folcloreMusic.loop = true;
+const folcloreMusicVolume = folcloreMusic.volume;
 const winSong = new Audio('Newsimgs/winsong.mp3');
 winSong.loop = true;
 const gameOverSound = new Audio('Newsimgs/gameover.mp3');
@@ -21,7 +22,9 @@ const ingredientesSinfRequeridos = new Set(
   document.querySelectorAll('#ingredientes-sinf-screen .ingrediente[data-requerido="true"]')
 );
 const ingredientesServirRequeridos = new Set(
-  document.querySelectorAll('#soloaguayvaso .ingrediente')
+  document.querySelectorAll(
+    '#soloaguayvaso .ingrediente[data-nombre="Hielos"], #soloaguayvaso .ingrediente[data-nombre="Vaso"]'
+  )
 );
 const ingredientesSeleccionados = new Set();
 const ingredientesSinfSeleccionados = new Set();
@@ -196,6 +199,10 @@ function startLicuarAnimation() {
 }
 
 function showScreen(screenId) {
+  folcloreMusic.volume = ['cortar-frutillas', 'licuar', 'azucarear', 'servir'].includes(screenId)
+    ? folcloreMusicVolume * 0.2
+    : folcloreMusicVolume;
+
   window.clearTimeout(finaleSequenceTimer);
   finaleSequenceTimer = null;
 
