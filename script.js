@@ -9,8 +9,6 @@ const gameOverSound = new Audio('Newsimgs/gameover.mp3');
 const sugarSound = new Audio('Newsimgs/azucar.mp3');
 let erroresIngredientes = 0;
 const maxErroresIngredientes = 3;
-let azucarearAdvanceTimer = null;
-let sugarSoundTimer = null;
 let finaleSequenceTimer = null;
 let finaleSequenceActive = false;
 let recetitaTimer = null;
@@ -30,11 +28,27 @@ const ingredientesSeleccionados = new Set();
 const ingredientesSinfSeleccionados = new Set();
 const ingredientesServirSeleccionados = new Set();
 const licuarFrames = [
+  'Newsimgs/PreLic1.jpeg',
   'Newsimgs/Lic1.jpg.jpeg',
   'Newsimgs/Lic2.jpg.jpeg',
   'Newsimgs/Lic3.jpg.jpeg',
   'Newsimgs/Lic4.jpg.jpeg',
   'Newsimgs/Lic5.jpg.jpeg'
+];
+const cortarFrutillasFrames = [
+  'Newsimgs/frut01.jpeg',
+  'Newsimgs/frut02.jpeg',
+  'Newsimgs/frut1.jpeg',
+  'Newsimgs/frut2.jpeg',
+  'Newsimgs/frut3.jpeg',
+  'Newsimgs/frut4.jpeg'
+];
+const cuttingSoundStopFrameIndex = cortarFrutillasFrames.indexOf('Newsimgs/frut3.jpeg');
+const azucarearFrames = [
+  'Newsimgs/azu1.jpeg',
+  'Newsimgs/azu2.jpeg',
+  'Newsimgs/azu3.jpeg',
+  'Newsimgs/azu4.jpeg'
 ];
 const servirFrames = [
   'Newsimgs/Vaso1.jpg.jpeg',
@@ -47,11 +61,23 @@ blenderSound.preload = 'auto';
 const iceSound = new Audio('Newsimgs/ice.mp3');
 const wineSound = new Audio('Newsimgs/wine.mp3');
 let licuarAnimationTimer = null;
+let licuarSoundTimer = null;
+let cuttingAnimationTimer = null;
 let servirAnimationTimer = null;
 let servirTransitionTimer = null;
 let folcloreGestureListener = null;
 
 licuarFrames.slice(1).forEach((frameSource) => {
+  const frame = new Image();
+  frame.src = frameSource;
+});
+
+cortarFrutillasFrames.slice(1).forEach((frameSource) => {
+  const frame = new Image();
+  frame.src = frameSource;
+});
+
+azucarearFrames.slice(1).forEach((frameSource) => {
   const frame = new Image();
   frame.src = frameSource;
 });
@@ -64,6 +90,8 @@ servirFrames.slice(1).forEach((frameSource) => {
 function stopLicuarAnimation() {
   window.clearInterval(licuarAnimationTimer);
   licuarAnimationTimer = null;
+  window.clearTimeout(licuarSoundTimer);
+  licuarSoundTimer = null;
   blenderSound.pause();
   blenderSound.currentTime = 0;
 }
@@ -174,10 +202,17 @@ function startLicuarAnimation() {
   let frameIndex = 0;
   licuarFrame.src = licuarFrames[frameIndex];
 
-  blenderSound.play().catch(() => {});
+  licuarSoundTimer = window.setTimeout(() => {
+    licuarSoundTimer = null;
+    if (document.getElementById('licuar').classList.contains('active')) {
+      blenderSound.play().catch((error) => {
+        console.error('No se pudo reproducir el sonido de la licuadora.', error);
+      });
+    }
+  }, 2000);
 
   const frameDuration = Number.isFinite(blenderSound.duration) && blenderSound.duration > 0
-    ? (blenderSound.duration * 1000) / licuarFrames.length
+    ? ((blenderSound.duration + 1) * 1000) / licuarFrames.length
     : 600;
 
   licuarAnimationTimer = window.setInterval(() => {
@@ -199,6 +234,14 @@ function startLicuarAnimation() {
 }
 
 function showScreen(screenId) {
+  window.clearTimeout(cuttingAnimationTimer);
+  cuttingAnimationTimer = null;
+
+  if (screenId !== 'cortar-frutillas') {
+    cuttingSound.pause();
+    cuttingSound.currentTime = 0;
+  }
+
   folcloreMusic.volume = ['cortar-frutillas', 'licuar', 'azucarear', 'servir'].includes(screenId)
     ? folcloreMusicVolume * 0.2
     : folcloreMusicVolume;
@@ -217,10 +260,8 @@ function showScreen(screenId) {
     finaleSequenceActive = false;
   }
 
-  window.clearTimeout(azucarearAdvanceTimer);
-  azucarearAdvanceTimer = null;
-  window.clearTimeout(sugarSoundTimer);
-  sugarSoundTimer = null;
+  document.getElementById('recipe-help').hidden = finaleSequenceActive;
+
   stopSugarSound();
   stopServirAnimation();
 
@@ -256,38 +297,30 @@ function showScreen(screenId) {
   }
 
   if (screenId === 'cortar-frutillas') {
+    document.getElementById('cortar-frutillas-frame').src = cortarFrutillasFrames[0];
     cuttingSound.currentTime = 0;
-    cuttingSound.play().catch(() => {
-      if (document.getElementById('cortar-frutillas').classList.contains('active')) {
-        showScreen('ingredientes-sinf-screen');
-      }
-    });
+    document.getElementById('cortar-frutillas-boton').hidden = false;
   }
 
   if (screenId === 'licuar') {
-    startLicuarAnimation();
+    stopLicuarAnimation();
+    document.getElementById('licuar-frame').src = licuarFrames[0];
+    document.getElementById('licuar-boton').hidden = false;
   } else {
     stopLicuarAnimation();
   }
 
   if (screenId === 'servir') {
-    startServirAnimation();
+    stopServirAnimation();
+    document.getElementById('servir-frame').src = servirFrames[0];
+    document.getElementById('servir-boton').hidden = false;
   }
 
   if (screenId === 'azucarear') {
-    sugarSoundTimer = window.setTimeout(() => {
-      if (document.getElementById('azucarear').classList.contains('active')) {
-        sugarSound.play().catch((error) => {
-          console.error('No se pudo reproducir el sonido del azúcar.', error);
-        });
-      }
-    }, 1000);
-
-    azucarearAdvanceTimer = window.setTimeout(() => {
-      if (document.getElementById('azucarear').classList.contains('active')) {
-        showScreen('soloaguayvaso');
-      }
-    }, 3000);
+    const azucarearFrame = document.getElementById('azucarear-frame');
+    azucarearFrame.src = azucarearFrames[0];
+    sugarSound.currentTime = 0;
+    document.getElementById('azucarear-boton').hidden = false;
   }
 
   if (screenId === 'ganaste-screen') {
@@ -342,12 +375,65 @@ cuttingSound.addEventListener('ended', () => {
 
 cuttingSound.addEventListener('timeupdate', () => {
   if (
-    document.getElementById('cortar-frutillas').classList.contains('active')
-    && Number.isFinite(cuttingSound.duration)
-    && cuttingSound.duration - cuttingSound.currentTime <= 1
+    !document.getElementById('cortar-frutillas').classList.contains('active')
+    || !Number.isFinite(cuttingSound.duration)
+    || cuttingSound.duration <= 0
   ) {
-    cuttingSound.pause();
-    showScreen('ingredientes-sinf-screen');
+    return;
+  }
+
+  const animationDuration = Math.max(cuttingSound.duration - 1, 0.001);
+  const progress = Math.min(cuttingSound.currentTime / animationDuration, 1);
+  const frameIndex = Math.min(
+    cuttingSoundStopFrameIndex,
+    Math.floor(progress * cortarFrutillasFrames.length)
+  );
+  const cuttingFrame = document.getElementById('cortar-frutillas-frame');
+  if (cuttingFrame.getAttribute('src') !== cortarFrutillasFrames[frameIndex]) {
+    cuttingFrame.src = cortarFrutillasFrames[frameIndex];
+
+    if (frameIndex === cuttingSoundStopFrameIndex) {
+      cuttingSound.pause();
+      const frameDuration = (animationDuration * 1000) / cortarFrutillasFrames.length;
+      cuttingAnimationTimer = window.setTimeout(() => {
+        if (!document.getElementById('cortar-frutillas').classList.contains('active')) {
+          return;
+        }
+
+        cuttingFrame.src = cortarFrutillasFrames[frameIndex + 1];
+        cuttingAnimationTimer = window.setTimeout(() => {
+          if (document.getElementById('cortar-frutillas').classList.contains('active')) {
+            showScreen('ingredientes-sinf-screen');
+          }
+        }, frameDuration);
+      }, frameDuration);
+    }
+  }
+});
+
+sugarSound.addEventListener('ended', () => {
+  if (document.getElementById('azucarear').classList.contains('active')) {
+    showScreen('soloaguayvaso');
+  }
+});
+
+sugarSound.addEventListener('timeupdate', () => {
+  if (
+    !document.getElementById('azucarear').classList.contains('active')
+    || !Number.isFinite(sugarSound.duration)
+    || sugarSound.duration <= 0
+  ) {
+    return;
+  }
+
+  const progress = sugarSound.currentTime / sugarSound.duration;
+  const frameIndex = Math.min(
+    azucarearFrames.length - 1,
+    Math.floor(progress * azucarearFrames.length)
+  );
+  const azucarearFrame = document.getElementById('azucarear-frame');
+  if (azucarearFrame.getAttribute('src') !== azucarearFrames[frameIndex]) {
+    azucarearFrame.src = azucarearFrames[frameIndex];
   }
 });
 
@@ -366,6 +452,40 @@ document.querySelectorAll('button[data-target]').forEach((button) => {
   button.addEventListener('click', () => {
     showScreen(button.dataset.target);
   });
+});
+
+document.getElementById('cortar-frutillas-boton').addEventListener('click', (event) => {
+  const button = event.currentTarget;
+  button.hidden = true;
+  cuttingSound.currentTime = 0;
+  cuttingSound.play().catch((error) => {
+    console.error('No se pudo reproducir el sonido de cortar las frutillas.', error);
+    if (document.getElementById('cortar-frutillas').classList.contains('active')) {
+      button.hidden = false;
+    }
+  });
+});
+
+document.getElementById('licuar-boton').addEventListener('click', (event) => {
+  event.currentTarget.hidden = true;
+  startLicuarAnimation();
+});
+
+document.getElementById('azucarear-boton').addEventListener('click', (event) => {
+  const button = event.currentTarget;
+  button.hidden = true;
+  sugarSound.currentTime = 0;
+  sugarSound.play().catch((error) => {
+    console.error('No se pudo reproducir el sonido del azúcar.', error);
+    if (document.getElementById('azucarear').classList.contains('active')) {
+      button.hidden = false;
+    }
+  });
+});
+
+document.getElementById('servir-boton').addEventListener('click', (event) => {
+  event.currentTarget.hidden = true;
+  startServirAnimation();
 });
 
 window.addEventListener('hashchange', initFromHash);

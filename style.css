@@ -114,6 +114,46 @@ button {
   height: 21%;
 }
 
+#cortar-frutillas-boton {
+  top: 90%;
+  left: 50%;
+  width: min(40%, 460px);
+  aspect-ratio: 1586 / 443;
+  transform: translate(-50%, -50%);
+  border: 0;
+  background: url("Newsimgs/cortar_boton.png") center / contain no-repeat;
+}
+
+#licuar-boton {
+  top: 90%;
+  left: 50%;
+  width: min(40%, 460px);
+  aspect-ratio: 1586 / 443;
+  transform: translate(-50%, -50%);
+  border: 0;
+  background: url("Newsimgs/licuar_boton.png") center / contain no-repeat;
+}
+
+#azucarear-boton {
+  top: 90%;
+  left: 50%;
+  width: min(40%, 460px);
+  aspect-ratio: 1586 / 443;
+  transform: translate(-50%, -50%);
+  border: 0;
+  background: url("Newsimgs/endulzar_boton.png") center / contain no-repeat;
+}
+
+#servir-boton {
+  top: 90%;
+  left: 50%;
+  width: min(40%, 460px);
+  aspect-ratio: 1586 / 443;
+  transform: translate(-50%, -50%);
+  border: 0;
+  background: url("Newsimgs/servir_boton.png") center / contain no-repeat;
+}
+
 /* SVG que se coloca exactamente
    encima de la imagen */
 .ingredientes-overlay {
@@ -200,15 +240,12 @@ button {
   top: 16px;
   left: 16px;
   z-index: 1000;
-  min-width: 92px;
-  height: 44px;
-  padding: 0 12px;
-  border: 2px solid #ffeb3b;
-  border-radius: 8px;
-  background: #171717 url("Newsimgs/FONDOBOTON_1.jpg") center / cover no-repeat;
-  color: #ffeb3b;
-  font-size: 16px;
-  font-weight: bold;
+  width: min(180px, 30vw);
+  aspect-ratio: 1586 / 443;
+  padding: 0;
+  border: 0;
+  background: url("Newsimgs/receta_boton.png") center / contain no-repeat;
+  cursor: pointer;
 }
 
 #intro-screen.active ~ #recipe-help {
